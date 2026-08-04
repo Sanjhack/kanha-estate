@@ -6,17 +6,46 @@ import {
   Settings,
 } from "lucide-react";
 
-export default function Sidebar() {
+type SidebarProps = {
+  page: string;
+  setPage: React.Dispatch<React.SetStateAction<string>>;
+};
+
+export default function Sidebar({
+  page,
+  setPage,
+}: SidebarProps) {
   const menu = [
-    { icon: LayoutDashboard, label: "Dashboard" },
-    { icon: Users, label: "Leads" },
-    { icon: Building2, label: "Properties" },
-    { icon: BarChart3, label: "Reports" },
-    { icon: Settings, label: "Settings" },
+    {
+      icon: LayoutDashboard,
+      label: "Dashboard",
+      value: "dashboard",
+    },
+    {
+      icon: Users,
+      label: "Leads",
+      value: "leads",
+    },
+    {
+      icon: Building2,
+      label: "Properties",
+      value: "properties",
+    },
+    {
+      icon: BarChart3,
+      label: "Reports",
+      value: "reports",
+    },
+    {
+      icon: Settings,
+      label: "Settings",
+      value: "settings",
+    },
   ];
 
   return (
     <aside className="w-72 bg-slate-900 text-white min-h-screen p-6">
+
       <h1 className="text-3xl font-bold text-emerald-400">
         Shervy Realty
       </h1>
@@ -26,16 +55,33 @@ export default function Sidebar() {
       </p>
 
       <div className="mt-10 space-y-3">
+
         {menu.map((item) => (
           <button
-            key={item.label}
-            className="w-full flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-slate-800 transition"
+            key={item.value}
+            onClick={() => setPage(item.value)}
+            className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 ${
+              page === item.value
+                ? "bg-emerald-600 text-white"
+                : "hover:bg-slate-800"
+            }`}
           >
             <item.icon size={20} />
             <span>{item.label}</span>
           </button>
         ))}
+
       </div>
+
+      <div className="absolute bottom-6 left-6 right-6">
+        <div className="border-t border-slate-700 pt-4">
+          <p className="font-semibold">Sanjay</p>
+          <p className="text-sm text-slate-400">
+            Administrator
+          </p>
+        </div>
+      </div>
+
     </aside>
   );
 }

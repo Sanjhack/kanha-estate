@@ -22,7 +22,10 @@ export default function Dashboard() {
   const loadLeads = async () => {
     try {
       const response = await getAllEnquiries();
-      setLeads(response.data);
+
+console.log("API Response:", response);
+
+setLeads(response.data);
     } catch (error) {
       console.error("Failed to load enquiries:", error);
     } finally {
