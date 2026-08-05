@@ -5,23 +5,33 @@ const {
   createEnquiry,
   getAllEnquiries,
   getEnquiryById,
-  updateStatus,
+  updateEnquiry,
   deleteEnquiry,
 } = require("../controllers/enquiryController");
 
+// ===============================
 // Create Enquiry
+// ===============================
 router.post("/", createEnquiry);
 
+// ===============================
 // Get All Enquiries
+// ===============================
 router.get("/", getAllEnquiries);
 
+// ===============================
 // Get Single Enquiry
+// ===============================
 router.get("/:id", getEnquiryById);
 
-// Update Enquiry Status
-router.put("/:id", updateStatus);
+// ===============================
+// Update Complete Enquiry
+// ===============================
+router.put("/:id", updateEnquiry);
 
+// ===============================
 // Delete Enquiry
+// ===============================
 router.delete("/:id", deleteEnquiry);
 
 module.exports = router;

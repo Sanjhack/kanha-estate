@@ -42,16 +42,23 @@ export async function createEnquiry(data: {
   return response.json();
 }
 
-export async function updateEnquiryStatus(
+export async function updateEnquiry(
   id: number,
-  status: string
+  data: {
+    name: string;
+    phone: string;
+    email: string;
+    plot: string;
+    message: string;
+    status: string;
+  }
 ) {
   const response = await fetch(`${API_BASE_URL}/enquiries/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ status }),
+    body: JSON.stringify(data),
   });
 
   if (!response.ok) {

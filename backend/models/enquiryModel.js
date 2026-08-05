@@ -30,7 +30,7 @@ const getAllEnquiries = (callback) => {
     SELECT *
     FROM enquiries
     ORDER BY created_at DESC
-  `,
+    `,
     [],
     callback
   );
@@ -43,20 +43,47 @@ const getEnquiryById = (id, callback) => {
     SELECT *
     FROM enquiries
     WHERE id = ?
-  `,
+    `,
     [id],
     callback
   );
 };
 
-// Update Status
+// Update Full Enquiry
+const updateEnquiry = (id, enquiry, callback) => {
+  db.run(
+    `
+    UPDATE enquiries
+    SET
+      name = ?,
+      phone = ?,
+      email = ?,
+      plot = ?,
+      message = ?,
+      status = ?
+    WHERE id = ?
+    `,
+    [
+      enquiry.name,
+      enquiry.phone,
+      enquiry.email,
+      enquiry.plot,
+      enquiry.message,
+      enquiry.status,
+      id,
+    ],
+    callback
+  );
+};
+
+// Update Status Only
 const updateStatus = (id, status, callback) => {
   db.run(
     `
     UPDATE enquiries
     SET status = ?
     WHERE id = ?
-  `,
+    `,
     [status, id],
     callback
   );
@@ -68,7 +95,7 @@ const deleteEnquiry = (id, callback) => {
     `
     DELETE FROM enquiries
     WHERE id = ?
-  `,
+    `,
     [id],
     callback
   );
@@ -78,6 +105,7 @@ module.exports = {
   createEnquiry,
   getAllEnquiries,
   getEnquiryById,
+  updateEnquiry,
   updateStatus,
   deleteEnquiry,
 };

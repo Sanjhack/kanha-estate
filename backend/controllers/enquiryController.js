@@ -90,22 +90,50 @@ const getEnquiryById = (req, res) => {
 };
 
 // ===============================
-// Update Status
+// Update Full Enquiry
 // ===============================
-const updateStatus = (req, res) => {
-  console.log("========== UPDATE REQUEST ==========");
-  console.log("Method :", req.method);
-  console.log("Headers:", req.headers);
-  console.log("Body   :", req.body);
-  console.log("====================================");
+const updateEnquiry = (req, res) => {
+  const { name, phone, email, plot, message, status } = req.body;
 
-  if (!req.body) {
+  if (!name || !phone) {
     return res.status(400).json({
       success: false,
-      message: "Request body is missing.",
+      message: "Name and Phone are required.",
     });
   }
 
+  enquiryModel.updateEnquiry(
+    req.params.id,
+    {
+      name,
+      phone,
+      email,
+      plot,
+      message,
+      status,
+    },
+    (err) => {
+      if (err) {
+        console.error(err);
+
+        return res.status(500).json({
+          success: false,
+          message: "Failed to update enquiry.",
+        });
+      }
+
+      res.json({
+        success: true,
+        message: "Enquiry updated successfully.",
+      });
+    }
+  );
+};
+
+// ===============================
+// Update Status Only
+// ===============================
+const updateStatus = (req, res) => {
   const { status } = req.body;
 
   enquiryModel.updateStatus(req.params.id, status, (err) => {
@@ -114,13 +142,13 @@ const updateStatus = (req, res) => {
 
       return res.status(500).json({
         success: false,
-        message: "Failed to update enquiry.",
+        message: "Failed to update status.",
       });
     }
 
     res.json({
       success: true,
-      message: "Enquiry updated successfully.",
+      message: "Status updated successfully.",
     });
   });
 };
@@ -150,6 +178,7 @@ module.exports = {
   createEnquiry,
   getAllEnquiries,
   getEnquiryById,
+  updateEnquiry,
   updateStatus,
   deleteEnquiry,
 };
