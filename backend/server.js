@@ -2,6 +2,7 @@ const db = require("./config/database");
 const express = require("express");
 const cors = require("cors");
 const enquiryRoutes = require("./routes/enquiryRoutes");
+const propertyRoutes = require("./routes/propertyRoutes");
 require("dotenv").config();
 
 const app = express();
@@ -12,6 +13,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/api/enquiries", enquiryRoutes);
+app.use("/api/properties", propertyRoutes);
 
 // ===============================
 // Test Route
