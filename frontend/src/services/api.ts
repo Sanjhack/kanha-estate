@@ -261,3 +261,128 @@ export async function deleteSiteVisit(id: number) {
 
   return response.json();
 }
+// ===================================
+// FOLLOW UPS API
+// ===================================
+
+export async function getAllFollowUps() {
+  const response = await fetch(`${API_BASE_URL}/follow-ups`);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch follow ups");
+  }
+
+  return response.json();
+}
+
+export async function getFollowUpById(id: number) {
+  const response = await fetch(`${API_BASE_URL}/follow-ups/${id}`);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch follow up");
+  }
+
+  return response.json();
+}
+
+export async function createFollowUp(data: {
+  lead_id: number;
+  followup_date: string;
+  followup_time: string;
+  followup_type: string;
+  priority: string;
+  status: string;
+  sales_person: string;
+  notes: string;
+}) {
+  const response = await fetch(`${API_BASE_URL}/follow-ups`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to create follow up");
+  }
+
+  return response.json();
+}
+
+export async function updateFollowUp(
+  id: number,
+  data: {
+    lead_id: number;
+    followup_date: string;
+    followup_time: string;
+    followup_type: string;
+    priority: string;
+    status: string;
+    sales_person: string;
+    notes: string;
+  }
+) {
+  const response = await fetch(`${API_BASE_URL}/follow-ups/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update follow up");
+  }
+
+  return response.json();
+}
+
+export async function deleteFollowUp(id: number) {
+  const response = await fetch(`${API_BASE_URL}/follow-ups/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete follow up");
+  }
+
+  return response.json();
+}
+// ===================================
+// REPORTS API
+// ===================================
+
+export async function getReportSummary() {
+
+  const response = await fetch(
+    `${API_BASE_URL}/reports/summary`
+  );
+
+  if (!response.ok) {
+
+    throw new Error(
+      "Failed to fetch report summary"
+    );
+
+  }
+
+  return response.json();
+
+}
+// ===================================
+// DASHBOARD API
+// ===================================
+
+export async function getDashboardStats() {
+
+  const response = await fetch(
+    `${API_BASE_URL}/dashboard/stats`
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch dashboard statistics");
+  }
+
+  return response.json();
+}

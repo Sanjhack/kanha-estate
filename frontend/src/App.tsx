@@ -6,6 +6,9 @@ import Dashboard from "./crm/Dashboard";
 import Leads from "./crm/Leads";
 import Properties from "./crm/Properties";
 import SiteVisits from "./crm/SiteVisits";
+import FollowUps from "./crm/FollowUps";
+import Reports from "./crm/Reports";
+import Settings from "./crm/Settings";
 
 export default function App() {
 
@@ -15,10 +18,18 @@ export default function App() {
 
     <div className="flex">
 
+      {/* Sidebar */}
+
       <Sidebar
         page={page}
         setPage={setPage}
       />
+
+      {/* DEBUG BADGE */}
+
+      
+
+      {/* Pages */}
 
       {page === "dashboard" && <Dashboard />}
 
@@ -27,6 +38,12 @@ export default function App() {
       {page === "properties" && <Properties />}
 
       {page === "site-visits" && <SiteVisits />}
+
+      {page === "follow-ups" && <FollowUps />}
+
+      {page === "reports" && <Reports />}
+
+      {page === "settings" && <Settings />}
 
     </div>
 

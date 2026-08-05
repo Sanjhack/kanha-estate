@@ -1,6 +1,8 @@
 const db = require("./config/database");
 const express = require("express");
 const cors = require("cors");
+const reportRoutes = require("./routes/reportRoutes");
+
 require("dotenv").config();
 
 // ===================================
@@ -11,12 +13,14 @@ const enquiryRoutes = require("./routes/enquiryRoutes");
 const propertyRoutes = require("./routes/propertyRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const siteVisitRoutes = require("./routes/siteVisitRoutes");
+const followUpRoutes = require("./routes/followUpRoutes");
 
 // ===================================
 // Database Tables
 // ===================================
 
 const createSiteVisitsTable = require("./database/createSiteVisitsTable");
+const createFollowUpsTable = require("./database/createFollowUpsTable");
 
 const app = express();
 
@@ -25,6 +29,7 @@ const app = express();
 // ===================================
 
 createSiteVisitsTable();
+createFollowUpsTable();
 
 // ===================================
 // Middleware
@@ -41,6 +46,8 @@ app.use("/api/enquiries", enquiryRoutes);
 app.use("/api/properties", propertyRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/site-visits", siteVisitRoutes);
+app.use("/api/follow-ups", followUpRoutes);
+app.use("/api/reports", reportRoutes);
 
 // ===================================
 // Test Route

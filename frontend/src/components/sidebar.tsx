@@ -3,6 +3,7 @@ import {
   Users,
   Building2,
   CalendarDays,
+  PhoneCall,
   BarChart3,
   Settings,
 } from "lucide-react";
@@ -16,6 +17,7 @@ export default function Sidebar({
   page,
   setPage,
 }: SidebarProps) {
+
   const menu = [
     {
       icon: LayoutDashboard,
@@ -36,6 +38,11 @@ export default function Sidebar({
       icon: CalendarDays,
       label: "Site Visits",
       value: "site-visits",
+    },
+    {
+      icon: PhoneCall,
+      label: "Follow Ups",
+      value: "follow-ups",
     },
     {
       icon: BarChart3,
@@ -63,6 +70,7 @@ export default function Sidebar({
       <div className="mt-10 space-y-3">
 
         {menu.map((item) => (
+
           <button
             key={item.value}
             onClick={() => setPage(item.value)}
@@ -75,6 +83,7 @@ export default function Sidebar({
             <item.icon size={20} />
             <span>{item.label}</span>
           </button>
+
         ))}
 
       </div>
