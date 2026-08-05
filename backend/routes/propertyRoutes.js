@@ -7,6 +7,7 @@ const {
   getPropertyById,
   updateProperty,
   deleteProperty,
+  getPropertyDropdown,
 } = require("../controllers/propertyController");
 
 // ===============================
@@ -18,6 +19,11 @@ router.post("/", createProperty);
 // Get All Properties
 // ===============================
 router.get("/", getAllProperties);
+
+// ===============================
+// Property Dropdown
+// ===============================
+router.get("/dropdown", getPropertyDropdown);
 
 // ===============================
 // Get Single Property

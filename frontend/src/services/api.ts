@@ -174,3 +174,90 @@ export async function deleteProperty(id: number) {
 
   return response.json();
 }
+
+// ===================================
+// SITE VISITS API
+// ===================================
+
+export async function getAllSiteVisits() {
+  const response = await fetch(`${API_BASE_URL}/site-visits`);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch site visits");
+  }
+
+  return response.json();
+}
+
+export async function getSiteVisitById(id: number) {
+  const response = await fetch(`${API_BASE_URL}/site-visits/${id}`);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch site visit");
+  }
+
+  return response.json();
+}
+
+export async function createSiteVisit(data: {
+  lead_id: number;
+  property_id: number;
+  visit_date: string;
+  visit_time: string;
+  sales_person: string;
+  status: string;
+  remarks: string;
+}) {
+  const response = await fetch(`${API_BASE_URL}/site-visits`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to create site visit");
+  }
+
+  return response.json();
+}
+
+export async function updateSiteVisit(
+  id: number,
+  data: {
+    lead_id: number;
+    property_id: number;
+    visit_date: string;
+    visit_time: string;
+    sales_person: string;
+    status: string;
+    remarks: string;
+  }
+) {
+  const response = await fetch(`${API_BASE_URL}/site-visits/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update site visit");
+  }
+
+  return response.json();
+}
+
+export async function deleteSiteVisit(id: number) {
+  const response = await fetch(`${API_BASE_URL}/site-visits/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete site visit");
+  }
+
+  return response.json();
+}

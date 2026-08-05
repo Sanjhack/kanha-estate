@@ -1,94 +1,92 @@
 import { useEffect, useState } from "react";
-import Header from "../components/Header";
-import StatsCard from "../components/StatsCard";
-import LeadTable from "../components/LeadTable";
-import { getAllEnquiries } from "../services/api";
 
-import {
-  Users,
-  UserPlus,
-  PhoneCall,
-  BadgeCheck,
-} from "lucide-react";
+import Header from "../components/Header";
+import LeadTable from "../components/LeadTable";
+
+import DashboardCards from "../dashboard/DashboardCards";
+import LeadPipeline from "../dashboard/LeadPipeline";
+import PropertyStatus from "../dashboard/PropertyStatus";
+import QuickActions from "../dashboard/QuickActions";
+import RecentProperties from "../dashboard/RecentProperties";
+
+import { getAllEnquiries } from "../services/api";
 
 export default function Dashboard() {
   const [leads, setLeads] = useState<any[]>([]);
+  const [stats, setStats] = useState<any>(null);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadLeads();
+    loadDashboard();
   }, []);
 
-  const loadLeads = async () => {
+  async function loadDashboard() {
     try {
-      const response = await getAllEnquiries();
+      // Load Leads
+      const leadResponse = await getAllEnquiries();
+      setLeads(leadResponse.data || []);
 
-console.log("API Response:", response);
+      // Load Dashboard Statistics
+      const statsResponse = await fetch(
+        "http://localhost:5000/api/dashboard/stats"
+      );
 
-setLeads(response.data);
-    } catch (error) {
-      console.error("Failed to load enquiries:", error);
+      const statsData = await statsResponse.json();
+
+      setStats(statsData.data);
+    } catch (err) {
+      console.error(err);
     } finally {
       setLoading(false);
     }
-  };
-
-  const totalLeads = leads.length;
-  const newLeads = leads.filter((lead) => lead.status === "New").length;
-  const contactedLeads = leads.filter(
-    (lead) => lead.status === "Contacted"
-  ).length;
+  }
 
   return (
     <div className="flex-1 bg-slate-100 min-h-screen p-8">
 
       <Header />
 
-      {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+      {/* KPI Cards */}
 
-        <StatsCard
-          title="Total Leads"
-          value={loading ? "..." : totalLeads}
-          subtitle="Live Database"
-          icon={Users}
-          iconBg="bg-emerald-100"
-          iconColor="text-emerald-600"
+      <DashboardCards
+        stats={stats}
+        loading={loading}
+      />
+
+      {/* Analytics */}
+
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-6">
+
+        <LeadPipeline
+          stats={stats}
+          loading={loading}
         />
 
-        <StatsCard
-          title="New Leads"
-          value={loading ? "..." : newLeads}
-          subtitle="Fresh Enquiries"
-          icon={UserPlus}
-          iconBg="bg-blue-100"
-          iconColor="text-blue-600"
-        />
-
-        <StatsCard
-          title="Contacted"
-          value={loading ? "..." : contactedLeads}
-          subtitle="Awaiting Calls"
-          icon={PhoneCall}
-          iconBg="bg-amber-100"
-          iconColor="text-amber-600"
-        />
-
-        <StatsCard
-          title="Bookings"
-          value={0}
-          subtitle="Closed Deals"
-          icon={BadgeCheck}
-          iconBg="bg-purple-100"
-          iconColor="text-purple-600"
+        <PropertyStatus
+          stats={stats}
+          loading={loading}
         />
 
       </div>
 
-      {/* Recent Enquiries */}
-      <div className="mt-10 bg-white rounded-2xl shadow-md border border-slate-200 p-6">
+      {/* Quick Actions */}
 
-        <div className="flex items-center justify-between mb-6">
+      <QuickActions />
+
+      {/* Recent Properties */}
+
+      <div className="mt-6">
+
+        <RecentProperties />
+
+      </div>
+
+      {/* Recent Enquiries */}
+
+      <div className="mt-8 bg-white rounded-2xl shadow-md border border-slate-200 p-6">
+
+        <div className="flex justify-between items-center mb-6">
 
           <h2 className="text-2xl font-bold text-slate-800">
             Recent Enquiries
@@ -103,15 +101,21 @@ setLeads(response.data);
         </div>
 
         {loading ? (
-          <div className="py-12 text-center text-gray-500">
+
+          <div className="text-center py-12 text-gray-500">
             Loading enquiries...
           </div>
+
         ) : leads.length === 0 ? (
-          <div className="py-12 text-center text-gray-500">
+
+          <div className="text-center py-12 text-gray-500">
             No enquiries found.
           </div>
+
         ) : (
+
           <LeadTable leads={leads} />
+
         )}
 
       </div>

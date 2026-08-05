@@ -7,6 +7,7 @@ const {
   getEnquiryById,
   updateEnquiry,
   deleteEnquiry,
+  getEnquiryDropdown,
 } = require("../controllers/enquiryController");
 
 // ===============================
@@ -18,6 +19,11 @@ router.post("/", createEnquiry);
 // Get All Enquiries
 // ===============================
 router.get("/", getAllEnquiries);
+
+// ===============================
+// Enquiry Dropdown
+// ===============================
+router.get("/dropdown", getEnquiryDropdown);
 
 // ===============================
 // Get Single Enquiry

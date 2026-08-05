@@ -152,7 +152,33 @@ const updateStatus = (req, res) => {
     });
   });
 };
+// ===============================
+// Get Enquiries For Dropdown
+// ===============================
 
+const getEnquiryDropdown = (req, res) => {
+
+  enquiryModel.getEnquiryDropdown((err, rows) => {
+
+    if (err) {
+
+      console.error(err);
+
+      return res.status(500).json({
+        success: false,
+        message: "Failed to fetch enquiry dropdown.",
+      });
+
+    }
+
+    res.json({
+      success: true,
+      data: rows,
+    });
+
+  });
+
+};
 // ===============================
 // Delete Enquiry
 // ===============================
@@ -181,4 +207,5 @@ module.exports = {
   updateEnquiry,
   updateStatus,
   deleteEnquiry,
+  getEnquiryDropdown,
 };

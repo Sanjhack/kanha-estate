@@ -2,6 +2,7 @@ import {
   LayoutDashboard,
   Users,
   Building2,
+  CalendarDays,
   BarChart3,
   Settings,
 } from "lucide-react";
@@ -32,6 +33,11 @@ export default function Sidebar({
       value: "properties",
     },
     {
+      icon: CalendarDays,
+      label: "Site Visits",
+      value: "site-visits",
+    },
+    {
       icon: BarChart3,
       label: "Reports",
       value: "reports",
@@ -44,7 +50,7 @@ export default function Sidebar({
   ];
 
   return (
-    <aside className="w-72 bg-slate-900 text-white min-h-screen p-6">
+    <aside className="relative w-72 bg-slate-900 text-white min-h-screen p-6">
 
       <h1 className="text-3xl font-bold text-emerald-400">
         Shervy Realty
@@ -74,12 +80,39 @@ export default function Sidebar({
       </div>
 
       <div className="absolute bottom-6 left-6 right-6">
-        <div className="border-t border-slate-700 pt-4">
-          <p className="font-semibold">Sanjay</p>
-          <p className="text-sm text-slate-400">
-            Administrator
-          </p>
+
+        <div className="bg-slate-800 border border-slate-700 rounded-2xl p-4">
+
+          <div className="flex items-center justify-between">
+
+            <div className="flex items-center gap-3">
+
+              <div className="w-11 h-11 rounded-full bg-emerald-600 flex items-center justify-center text-white font-bold">
+                S
+              </div>
+
+              <div>
+
+                <p className="font-semibold">
+                  Sanjay
+                </p>
+
+                <p className="text-sm text-slate-400">
+                  Administrator
+                </p>
+
+              </div>
+
+            </div>
+
+            <span className="text-slate-500 text-xl">
+              ›
+            </span>
+
+          </div>
+
         </div>
+
       </div>
 
     </aside>

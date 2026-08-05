@@ -1,47 +1,58 @@
-// ===============================
+// ===================================
 // Imports
-// ===============================
+// ===================================
 
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
-import AddPropertyModal from "../components/AddPropertyModal";
-import ViewPropertyModal from "../components/ViewPropertyModal";
-import EditPropertyModal from "../components/EditPropertyModal";
+
+import AddSiteVisitModal from "../components/AddSiteVisitModal";
+import ViewSiteVisitModal from "../components/ViewSiteVisitModal";
+import EditSiteVisitModal from "../components/EditSiteVisitModal";
 
 import {
-  getAllProperties,
-  deleteProperty,
+  getAllSiteVisits,
+  deleteSiteVisit,
 } from "../services/api";
 
-// ===============================
+// ===================================
 // Types
-// ===============================
+// ===================================
 
-export type Property = {
+export type SiteVisit = {
   id: number;
-  project_name: string;
-  plot_number: string;
-  plot_size: string;
-  facing: string;
-  price: number;
-  plc: number;
+
+  lead_id: number;
+  property_id: number;
+
+  customer_name?: string;
+  phone?: string;
+
+  plot_number?: string;
+  project_name?: string;
+
+  visit_date: string;
+  visit_time: string;
+
+  sales_person: string;
+
   status: string;
-  description: string;
-  image: string;
+
+  remarks: string;
+
   created_at: string;
 };
 
-// ===============================
+// ===================================
 // Component
-// ===============================
+// ===================================
 
-export default function Properties() {
+export default function SiteVisits() {
 
-  // ===============================
+  // ===================================
   // State
-  // ===============================
+  // ===================================
 
-  const [properties, setProperties] = useState<Property[]>([]);
+  const [visits, setVisits] = useState<SiteVisit[]>([]);
   const [loading, setLoading] = useState(true);
 
   const [search, setSearch] = useState("");
@@ -51,103 +62,142 @@ export default function Properties() {
   const [showViewModal, setShowViewModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
 
-  const [selectedProperty, setSelectedProperty] =
-    useState<Property | null>(null);
+  const [selectedVisit, setSelectedVisit] =
+    useState<SiteVisit | null>(null);
 
-  // ===============================
+  // ===================================
   // Effects
-  // ===============================
+  // ===================================
 
   useEffect(() => {
-    loadProperties();
+    loadSiteVisits();
   }, []);
 
-  // ===============================
+  // ===================================
   // API Functions
-  // ===============================
+  // ===================================
 
-  async function loadProperties() {
+  async function loadSiteVisits() {
+
     try {
-      const response = await getAllProperties();
-      setProperties(response.data || []);
+
+      const response = await getAllSiteVisits();
+
+      setVisits(response.data || []);
+
     } catch (err) {
+
       console.error(err);
+
     } finally {
+
       setLoading(false);
+
     }
+
   }
 
   async function handleDelete(id: number) {
+
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this property?"
+      "Are you sure you want to delete this site visit?"
     );
 
     if (!confirmDelete) return;
 
     try {
-      await deleteProperty(id);
-      await loadProperties();
+
+      await deleteSiteVisit(id);
+
+      await loadSiteVisits();
+
     } catch (err) {
+
       console.error(err);
-      alert("Failed to delete property.");
+
+      alert("Failed to delete site visit.");
+
     }
+
   }
 
-  // ===============================
+  // ===================================
   // Filter Logic
-  // ===============================
+  // ===================================
 
-  const filteredProperties = properties.filter((property) => {
+  const filteredVisits = visits.filter((visit) => {
 
     const query = search.toLowerCase();
 
     const matchesSearch =
-      property.plot_number.toLowerCase().includes(query) ||
-      property.project_name.toLowerCase().includes(query) ||
-      property.plot_size.toLowerCase().includes(query) ||
-      property.facing.toLowerCase().includes(query) ||
-      property.status.toLowerCase().includes(query);
+
+      (visit.customer_name || "")
+        .toLowerCase()
+        .includes(query)
+
+      ||
+
+      (visit.plot_number || "")
+        .toLowerCase()
+        .includes(query)
+
+      ||
+
+      (visit.sales_person || "")
+        .toLowerCase()
+        .includes(query)
+
+      ||
+
+      visit.status
+        .toLowerCase()
+        .includes(query);
 
     const matchesStatus =
-      statusFilter === "All" ||
-      property.status === statusFilter;
+
+      statusFilter === "All"
+
+      ||
+
+      visit.status === statusFilter;
 
     return matchesSearch && matchesStatus;
 
   });
 
-  // ===============================
+  // ===================================
   // JSX
-  // ===============================
+  // ===================================
 
   return (
-        <div className="flex-1 bg-slate-100 min-h-screen p-8">
+
+    <div className="flex-1 bg-slate-100 min-h-screen p-8">
 
       <Header />
 
-      <AddPropertyModal
+      <AddSiteVisitModal
         open={showAddModal}
         onClose={() => setShowAddModal(false)}
-        onSuccess={loadProperties}
+        onSuccess={loadSiteVisits}
       />
 
-      <ViewPropertyModal
+      <ViewSiteVisitModal
         open={showViewModal}
-        property={selectedProperty}
+        visit={selectedVisit}
         onClose={() => {
           setShowViewModal(false);
-          setSelectedProperty(null);
+          setSelectedVisit(null);
         }}
       />
 
-      <EditPropertyModal
+      <EditSiteVisitModal
         open={showEditModal}
-        property={selectedProperty}
+        visit={selectedVisit}
         onClose={() => {
           setShowEditModal(false);
-          setSelectedProperty(null);
+          setSelectedVisit(null);
         }}
-        onSuccess={loadProperties}
+        onSuccess={loadSiteVisits}
       />
 
       <div className="bg-white rounded-2xl shadow-md p-6">
@@ -157,14 +207,14 @@ export default function Properties() {
         <div className="flex justify-between items-center mb-6">
 
           <h1 className="text-3xl font-bold">
-            Kanha Estate Properties
+            Site Visits
           </h1>
 
           <button
             onClick={() => setShowAddModal(true)}
             className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-3 rounded-xl"
           >
-            + Add Property
+            + Schedule Visit
           </button>
 
         </div>
@@ -175,29 +225,45 @@ export default function Properties() {
 
           <input
             type="text"
-            placeholder="🔍 Search Properties..."
+            placeholder="🔍 Search Site Visits..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) =>
+              setSearch(e.target.value)
+            }
             className="flex-1 border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-emerald-500"
           />
 
           <select
             value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
+            onChange={(e) =>
+              setStatusFilter(e.target.value)
+            }
             className="border rounded-xl px-4 py-3"
           >
-            <option value="All">All Status</option>
-            <option value="Available">Available</option>
-            <option value="Reserved">Reserved</option>
-            <option value="Sold">Sold</option>
+
+            <option value="All">
+              All Status
+            </option>
+
+            <option value="Scheduled">
+              Scheduled
+            </option>
+
+            <option value="Completed">
+              Completed
+            </option>
+
+            <option value="Cancelled">
+              Cancelled
+            </option>
+
           </select>
 
         </div>
-
-        {loading ? (
+                {loading ? (
 
           <div className="text-center py-10">
-            Loading Properties...
+            Loading Site Visits...
           </div>
 
         ) : (
@@ -210,10 +276,11 @@ export default function Properties() {
 
                 <tr className="border-b">
 
-                  <th className="text-left py-4">Plot</th>
-                  <th className="text-left py-4">Size</th>
-                  <th className="text-left py-4">Facing</th>
-                  <th className="text-left py-4">Price</th>
+                  <th className="text-left py-4">Customer</th>
+                  <th className="text-left py-4">Property</th>
+                  <th className="text-left py-4">Visit Date</th>
+                  <th className="text-left py-4">Time</th>
+                  <th className="text-left py-4">Sales Person</th>
                   <th className="text-left py-4">Status</th>
                   <th className="text-center py-4">Actions</th>
 
@@ -223,52 +290,60 @@ export default function Properties() {
 
               <tbody>
 
-                {filteredProperties.length === 0 ? (
+                {filteredVisits.length === 0 ? (
 
                   <tr>
 
                     <td
-                      colSpan={6}
+                      colSpan={7}
                       className="text-center py-12 text-gray-500"
                     >
-                      No Properties Found
+                      No Site Visits Found
                     </td>
 
                   </tr>
 
                 ) : (
 
-                  filteredProperties.map((property) => (
+                  filteredVisits.map((visit) => (
 
                     <tr
-                      key={property.id}
+                      key={visit.id}
                       className="border-b hover:bg-slate-50"
                     >
 
                       <td className="py-4 font-semibold">
-                        {property.plot_number}
+                        {visit.customer_name || "-"}
                       </td>
 
-                      <td>{property.plot_size}</td>
-
-                      <td>{property.facing}</td>
+                      <td>
+                        {visit.plot_number || "-"}
+                      </td>
 
                       <td>
-                        ₹ {property.price.toLocaleString()}
+                        {visit.visit_date}
+                      </td>
+
+                      <td>
+                        {visit.visit_time}
+                      </td>
+
+                      <td>
+                        {visit.sales_person}
                       </td>
 
                       <td>
 
                         <span
                           className={`px-3 py-1 rounded-full text-sm font-medium ${
-                            property.status === "Available"
+                            visit.status === "Scheduled"
+                              ? "bg-blue-100 text-blue-700"
+                              : visit.status === "Completed"
                               ? "bg-green-100 text-green-700"
-                              : property.status === "Reserved"
-                              ? "bg-yellow-100 text-yellow-700"
                               : "bg-red-100 text-red-700"
                           }`}
                         >
-                          {property.status}
+                          {visit.status}
                         </span>
 
                       </td>
@@ -277,7 +352,7 @@ export default function Properties() {
 
                         <button
                           onClick={() => {
-                            setSelectedProperty(property);
+                            setSelectedVisit(visit);
                             setShowViewModal(true);
                           }}
                           className="text-blue-600 hover:underline"
@@ -287,7 +362,7 @@ export default function Properties() {
 
                         <button
                           onClick={() => {
-                            setSelectedProperty(property);
+                            setSelectedVisit(visit);
                             setShowEditModal(true);
                           }}
                           className="text-emerald-600 hover:underline"
@@ -296,7 +371,7 @@ export default function Properties() {
                         </button>
 
                         <button
-                          onClick={() => handleDelete(property.id)}
+                          onClick={() => handleDelete(visit.id)}
                           className="text-red-600 hover:underline"
                         >
                           Delete
@@ -321,5 +396,7 @@ export default function Properties() {
       </div>
 
     </div>
+
   );
+
 }

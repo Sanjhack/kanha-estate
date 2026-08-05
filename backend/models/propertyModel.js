@@ -3,7 +3,9 @@ const db = require("../config/database");
 // ===============================
 // Create Property
 // ===============================
+
 const createProperty = (property, callback) => {
+
   const sql = `
     INSERT INTO properties
     (
@@ -37,12 +39,15 @@ const createProperty = (property, callback) => {
       callback(err, this?.lastID);
     }
   );
+
 };
 
 // ===============================
 // Get All Properties
 // ===============================
+
 const getAllProperties = (callback) => {
+
   db.all(
     `
       SELECT *
@@ -52,12 +57,15 @@ const getAllProperties = (callback) => {
     [],
     callback
   );
+
 };
 
 // ===============================
 // Get Property By ID
 // ===============================
+
 const getPropertyById = (id, callback) => {
+
   db.get(
     `
       SELECT *
@@ -67,12 +75,15 @@ const getPropertyById = (id, callback) => {
     [id],
     callback
   );
+
 };
 
 // ===============================
 // Update Property
 // ===============================
+
 const updateProperty = (id, property, callback) => {
+
   db.run(
     `
       UPDATE properties
@@ -102,12 +113,15 @@ const updateProperty = (id, property, callback) => {
     ],
     callback
   );
+
 };
 
 // ===============================
 // Delete Property
 // ===============================
+
 const deleteProperty = (id, callback) => {
+
   db.run(
     `
       DELETE FROM properties
@@ -116,7 +130,34 @@ const deleteProperty = (id, callback) => {
     [id],
     callback
   );
+
 };
+
+// ===============================
+// Get Properties For Dropdown
+// ===============================
+
+const getPropertyDropdown = (callback) => {
+
+  db.all(
+    `
+      SELECT
+        id,
+        project_name,
+        plot_number
+      FROM properties
+      WHERE status = 'Available'
+      ORDER BY plot_number ASC
+    `,
+    [],
+    callback
+  );
+
+};
+
+// ===============================
+// Exports
+// ===============================
 
 module.exports = {
   createProperty,
@@ -124,4 +165,5 @@ module.exports = {
   getPropertyById,
   updateProperty,
   deleteProperty,
+  getPropertyDropdown,
 };

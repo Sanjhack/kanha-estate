@@ -3,6 +3,7 @@ const propertyModel = require("../models/propertyModel");
 // ===============================
 // Create Property
 // ===============================
+
 const createProperty = (req, res) => {
   const {
     project_name,
@@ -57,6 +58,7 @@ const createProperty = (req, res) => {
 // ===============================
 // Get All Properties
 // ===============================
+
 const getAllProperties = (req, res) => {
   propertyModel.getAllProperties((err, rows) => {
     if (err) {
@@ -76,8 +78,31 @@ const getAllProperties = (req, res) => {
 };
 
 // ===============================
+// Property Dropdown
+// ===============================
+
+const getPropertyDropdown = (req, res) => {
+  propertyModel.getPropertyDropdown((err, rows) => {
+    if (err) {
+      console.error(err);
+
+      return res.status(500).json({
+        success: false,
+        message: "Failed to fetch property dropdown.",
+      });
+    }
+
+    res.json({
+      success: true,
+      data: rows,
+    });
+  });
+};
+
+// ===============================
 // Get Property By ID
 // ===============================
+
 const getPropertyById = (req, res) => {
   propertyModel.getPropertyById(req.params.id, (err, row) => {
     if (err) {
@@ -106,6 +131,7 @@ const getPropertyById = (req, res) => {
 // ===============================
 // Update Property
 // ===============================
+
 const updateProperty = (req, res) => {
   const {
     project_name,
@@ -160,6 +186,7 @@ const updateProperty = (req, res) => {
 // ===============================
 // Delete Property
 // ===============================
+
 const deleteProperty = (req, res) => {
   propertyModel.deleteProperty(req.params.id, (err) => {
     if (err) {
@@ -178,9 +205,14 @@ const deleteProperty = (req, res) => {
   });
 };
 
+// ===============================
+// Exports
+// ===============================
+
 module.exports = {
   createProperty,
   getAllProperties,
+  getPropertyDropdown,
   getPropertyById,
   updateProperty,
   deleteProperty,
