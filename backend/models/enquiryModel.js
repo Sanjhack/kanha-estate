@@ -1,32 +1,38 @@
 const db = require("../config/database");
 
+
 // ===============================
 // Create Enquiry
 // ===============================
 
 const createEnquiry = (enquiry, callback) => {
 
-  const sql = `
-    INSERT INTO enquiries
-    (name, phone, email, plot, message)
-    VALUES (?, ?, ?, ?, ?)
-  `;
+  try {
 
-  db.run(
-    sql,
-    [
+    const stmt = db.prepare(`
+      INSERT INTO enquiries
+      (name, phone, email, plot, message)
+      VALUES (?, ?, ?, ?, ?)
+    `);
+
+    const result = stmt.run(
       enquiry.name,
       enquiry.phone,
       enquiry.email,
       enquiry.plot,
-      enquiry.message,
-    ],
-    function (err) {
-      callback(err, this?.lastID);
-    }
-  );
+      enquiry.message
+    );
+
+    callback(null, result.lastInsertRowid);
+
+  } catch (err) {
+
+    callback(err);
+
+  }
 
 };
+
 
 // ===============================
 // Get All Enquiries
@@ -34,17 +40,24 @@ const createEnquiry = (enquiry, callback) => {
 
 const getAllEnquiries = (callback) => {
 
-  db.all(
-    `
+  try {
+
+    const rows = db.prepare(`
       SELECT *
       FROM enquiries
       ORDER BY created_at DESC
-    `,
-    [],
-    callback
-  );
+    `).all();
+
+    callback(null, rows);
+
+  } catch (err) {
+
+    callback(err);
+
+  }
 
 };
+
 
 // ===============================
 // Get Enquiry By ID
@@ -52,17 +65,24 @@ const getAllEnquiries = (callback) => {
 
 const getEnquiryById = (id, callback) => {
 
-  db.get(
-    `
+  try {
+
+    const row = db.prepare(`
       SELECT *
       FROM enquiries
       WHERE id = ?
-    `,
-    [id],
-    callback
-  );
+    `).get(id);
+
+    callback(null, row);
+
+  } catch (err) {
+
+    callback(err);
+
+  }
 
 };
+
 
 // ===============================
 // Update Enquiry
@@ -70,8 +90,9 @@ const getEnquiryById = (id, callback) => {
 
 const updateEnquiry = (id, enquiry, callback) => {
 
-  db.run(
-    `
+  try {
+
+    db.prepare(`
       UPDATE enquiries
       SET
         name = ?,
@@ -81,20 +102,26 @@ const updateEnquiry = (id, enquiry, callback) => {
         message = ?,
         status = ?
       WHERE id = ?
-    `,
-    [
+    `).run(
       enquiry.name,
       enquiry.phone,
       enquiry.email,
       enquiry.plot,
       enquiry.message,
       enquiry.status,
-      id,
-    ],
-    callback
-  );
+      id
+    );
+
+    callback(null);
+
+  } catch (err) {
+
+    callback(err);
+
+  }
 
 };
+
 
 // ===============================
 // Update Status
@@ -102,17 +129,27 @@ const updateEnquiry = (id, enquiry, callback) => {
 
 const updateStatus = (id, status, callback) => {
 
-  db.run(
-    `
+  try {
+
+    db.prepare(`
       UPDATE enquiries
       SET status = ?
       WHERE id = ?
-    `,
-    [status, id],
-    callback
-  );
+    `).run(
+      status,
+      id
+    );
+
+    callback(null);
+
+  } catch (err) {
+
+    callback(err);
+
+  }
 
 };
+
 
 // ===============================
 // Delete Enquiry
@@ -120,16 +157,23 @@ const updateStatus = (id, status, callback) => {
 
 const deleteEnquiry = (id, callback) => {
 
-  db.run(
-    `
+  try {
+
+    db.prepare(`
       DELETE FROM enquiries
       WHERE id = ?
-    `,
-    [id],
-    callback
-  );
+    `).run(id);
+
+    callback(null);
+
+  } catch (err) {
+
+    callback(err);
+
+  }
 
 };
+
 
 // ===============================
 // Get Enquiries For Dropdown
@@ -137,20 +181,27 @@ const deleteEnquiry = (id, callback) => {
 
 const getEnquiryDropdown = (callback) => {
 
-  db.all(
-    `
+  try {
+
+    const rows = db.prepare(`
       SELECT
         id,
         name,
         phone
       FROM enquiries
       ORDER BY name ASC
-    `,
-    [],
-    callback
-  );
+    `).all();
+
+    callback(null, rows);
+
+  } catch (err) {
+
+    callback(err);
+
+  }
 
 };
+
 
 // ===============================
 // Exports

@@ -1,41 +1,55 @@
 const db = require("../config/database");
 
 const createSiteVisitsTable = () => {
-  const sql = `
-    CREATE TABLE IF NOT EXISTS site_visits (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-      lead_id INTEGER NOT NULL,
+  try {
 
-      property_id INTEGER NOT NULL,
+    const sql = `
+      CREATE TABLE IF NOT EXISTS site_visits (
 
-      visit_date TEXT NOT NULL,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-      visit_time TEXT NOT NULL,
+        lead_id INTEGER NOT NULL,
 
-      sales_person TEXT,
+        property_id INTEGER NOT NULL,
 
-      status TEXT DEFAULT 'Scheduled',
+        visit_date TEXT NOT NULL,
 
-      remarks TEXT,
+        visit_time TEXT NOT NULL,
 
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        sales_person TEXT,
 
-      FOREIGN KEY (lead_id)
-        REFERENCES enquiries(id),
+        status TEXT DEFAULT 'Scheduled',
 
-      FOREIGN KEY (property_id)
-        REFERENCES properties(id)
-    )
-  `;
+        remarks TEXT,
 
-  db.run(sql, (err) => {
-    if (err) {
-      console.error("❌ Site Visits table creation failed:", err.message);
-    } else {
-      console.log("✅ Site Visits table ready");
-    }
-  });
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+        FOREIGN KEY (lead_id)
+          REFERENCES enquiries(id),
+
+        FOREIGN KEY (property_id)
+          REFERENCES properties(id)
+
+      )
+    `;
+
+
+    db.exec(sql);
+
+    console.log("✅ Site Visits table ready");
+
+
+  } catch (err) {
+
+    console.error(
+      "❌ Site Visits table creation failed:",
+      err.message
+    );
+
+  }
+
 };
+
 
 module.exports = createSiteVisitsTable;

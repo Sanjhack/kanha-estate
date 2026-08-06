@@ -1,46 +1,55 @@
 const db = require("../config/database");
 
 function createFollowUpsTable() {
-  const sql = `
-    CREATE TABLE IF NOT EXISTS follow_ups (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-      lead_id INTEGER NOT NULL,
+  try {
 
-      followup_date TEXT NOT NULL,
-      followup_time TEXT NOT NULL,
+    const sql = `
+      CREATE TABLE IF NOT EXISTS follow_ups (
 
-      followup_type TEXT NOT NULL,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-      priority TEXT DEFAULT 'Medium',
+        lead_id INTEGER NOT NULL,
 
-      status TEXT DEFAULT 'Pending',
+        followup_date TEXT NOT NULL,
 
-      sales_person TEXT,
+        followup_time TEXT NOT NULL,
 
-      notes TEXT,
+        followup_type TEXT NOT NULL,
 
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        priority TEXT DEFAULT 'Medium',
 
-      FOREIGN KEY (lead_id)
-      REFERENCES enquiries(id)
-      ON DELETE CASCADE
+        status TEXT DEFAULT 'Pending',
+
+        sales_person TEXT,
+
+        notes TEXT,
+
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+        FOREIGN KEY (lead_id)
+        REFERENCES enquiries(id)
+        ON DELETE CASCADE
+
+      );
+    `;
+
+
+    db.exec(sql);
+
+    console.log("✅ Follow Ups table ready");
+
+
+  } catch (err) {
+
+    console.error(
+      "❌ Error creating Follow Ups table:",
+      err.message
     );
-  `;
 
-  db.run(sql, (err) => {
+  }
 
-    if (err) {
-
-      console.error("❌ Error creating Follow Ups table:", err);
-
-    } else {
-
-      console.log("✅ Follow Ups table ready");
-
-    }
-
-  });
 }
+
 
 module.exports = createFollowUpsTable;
