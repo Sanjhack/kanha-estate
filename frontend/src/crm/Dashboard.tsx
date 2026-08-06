@@ -12,7 +12,11 @@ import RecentProperties from "../dashboard/RecentProperties";
 import { getAllEnquiries } from "../services/api";
 
 
-export default function Dashboard() {
+export default function Dashboard({
+  setPage,
+}: {
+  setPage: (page: string) => void;
+}) {
 
   const [leads, setLeads] = useState<any[]>([]);
 
@@ -189,7 +193,7 @@ export default function Dashboard() {
 
       {/* Quick Actions */}
 
-      <QuickActions />
+      <QuickActions setPage={setPage} />
 
 
 

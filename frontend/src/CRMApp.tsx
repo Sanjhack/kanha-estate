@@ -11,19 +11,18 @@ import Reports from "./crm/Reports";
 import Settings from "./crm/Settings";
 
 export default function CRMApp() {
-
   const [page, setPage] = useState("dashboard");
 
   return (
-
     <div className="flex">
-
       <Sidebar
         page={page}
         setPage={setPage}
       />
 
-      {page === "dashboard" && <Dashboard />}
+      {page === "dashboard" && (
+        <Dashboard setPage={setPage} />
+      )}
 
       {page === "leads" && <Leads />}
 
@@ -36,9 +35,6 @@ export default function CRMApp() {
       {page === "reports" && <Reports />}
 
       {page === "settings" && <Settings />}
-
     </div>
-
   );
-
 }
