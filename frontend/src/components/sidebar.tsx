@@ -6,6 +6,7 @@ import {
   PhoneCall,
   BarChart3,
   Settings,
+  LogOut,
 } from "lucide-react";
 
 type SidebarProps = {
@@ -56,6 +57,18 @@ export default function Sidebar({
     },
   ];
 
+  function handleLogout() {
+    const confirmLogout = window.confirm(
+      "Are you sure you want to logout?"
+    );
+
+    if (!confirmLogout) return;
+
+    localStorage.removeItem("crmLoggedIn");
+
+    window.location.href = "/crm/login";
+  }
+
   return (
     <aside className="relative w-72 bg-slate-900 text-white min-h-screen p-6">
 
@@ -81,10 +94,24 @@ export default function Sidebar({
             }`}
           >
             <item.icon size={20} />
+
             <span>{item.label}</span>
+
           </button>
 
         ))}
+
+        <hr className="border-slate-700 my-5" />
+
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center gap-4 px-4 py-3 rounded-xl text-red-400 hover:bg-red-600 hover:text-white transition-all duration-200"
+        >
+          <LogOut size={20} />
+
+          <span>Logout</span>
+
+        </button>
 
       </div>
 
