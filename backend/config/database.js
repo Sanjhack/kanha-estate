@@ -1,41 +1,21 @@
-const Database = require("better-sqlite3");
-const path = require("path");
+const { Pool } = require("pg");
+require("dotenv").config();
 
-const dbPath = path.join(
-  __dirname,
-  "../database/enquiries.db"
-);
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
 
-const db = new Database(dbPath);
+pool.on("connect", () => {
+  console.log("✅ PostgreSQL Connected Successfully");
+});
 
-console.log("✅ SQLite Connected Successfully");
+pool.on("error", (err) => {
+  console.error("❌ PostgreSQL Error:", err.message);
+});
 
-
-// ===============================
-// Create Enquiries Table
-// ===============================
-
-db.exec(`
-  CREATE TABLE IF NOT EXISTS enquiries (
-
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-
-    name TEXT NOT NULL,
-
-    phone TEXT NOT NULL,
-
-    email TEXT,
-
-    plot TEXT,
-
-    message TEXT,
-
-    status TEXT DEFAULT 'New',
-
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-
-  )
-`);
-
-
-module.exports = db;
+module.exports = {
+  query: (text, params) => pool.query(text, params),
+};
