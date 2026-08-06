@@ -5,24 +5,31 @@ const dashboardModel = require("../models/dashboardModel");
 // ===============================
 
 const getDashboardStats = (req, res) => {
+
   dashboardModel.getDashboardStats((err, stats) => {
 
-  console.log("Dashboard Stats =>", stats);
     if (err) {
-      console.error(err);
+
+      console.error("DASHBOARD ERROR:", err);
 
       return res.status(500).json({
         success: false,
-        message: "Failed to fetch dashboard statistics.",
+        message: err.message,
       });
+
     }
+
+    console.log("Dashboard Stats =>", stats);
 
     res.json({
       success: true,
       data: stats,
     });
+
   });
+
 };
+
 
 module.exports = {
   getDashboardStats,

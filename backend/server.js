@@ -3,6 +3,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const reportRoutes = require("./routes/reportRoutes");
+const createPropertiesTable = require("./database/createPropertiesTable");
 
 // ===================================
 // Routes
@@ -43,6 +44,7 @@ const app = express();
 // ===================================
 
 createEnquiriesTable();
+createPropertiesTable();
 createSiteVisitsTable();
 createFollowUpsTable();
 
