@@ -51,7 +51,7 @@ export default function AddFollowUpModal({
       setLoading(true);
 
       const response = await fetch(
-        "http://localhost:5000/api/enquiries/dropdown"
+        "https://kanha-estate.onrender.com/api/enquiries/dropdown"
       );
 
       const json = await response.json();

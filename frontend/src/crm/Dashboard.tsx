@@ -29,7 +29,7 @@ export default function Dashboard() {
 
       // Load Dashboard Statistics
       const statsResponse = await fetch(
-        "http://localhost:5000/api/dashboard/stats"
+        "https://kanha-estate.onrender.com/api/dashboard/stats"
       );
 
       const statsData = await statsResponse.json();

@@ -28,7 +28,7 @@ export default function Contact() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/enquiries",
+        "https://kanha-estate.onrender.com/api/enquiries",
         {
           method: "POST",
           headers: {

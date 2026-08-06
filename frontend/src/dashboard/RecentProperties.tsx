@@ -19,7 +19,7 @@ export default function RecentProperties() {
   async function loadProperties() {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/properties"
+        "https://kanha-estate.onrender.com/api/properties"
       );
 
       const data = await response.json();

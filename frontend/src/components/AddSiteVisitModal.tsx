@@ -50,8 +50,8 @@ export default function AddSiteVisitModal({
       setLoading(true);
 
       const [leadRes, propertyRes] = await Promise.all([
-        fetch("http://localhost:5000/api/enquiries/dropdown"),
-        fetch("http://localhost:5000/api/properties/dropdown"),
+        fetch("https://kanha-estate.onrender.com/api/enquiries/dropdown"),
+        fetch("https://kanha-estate.onrender.com/api/properties/dropdown"),
       ]);
 
       const leadJson = await leadRes.json();
