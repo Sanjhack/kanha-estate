@@ -10,8 +10,7 @@ import FollowUps from "./crm/FollowUps";
 import Reports from "./crm/Reports";
 import Settings from "./crm/Settings";
 
-
-export default function App() {
+export default function CRMApp() {
 
   const [page, setPage] = useState("dashboard");
 
@@ -19,18 +18,10 @@ export default function App() {
 
     <div className="flex">
 
-      {/* Sidebar */}
-
       <Sidebar
         page={page}
         setPage={setPage}
       />
-
-      {/* DEBUG BADGE */}
-
-      
-
-      {/* Pages */}
 
       {page === "dashboard" && <Dashboard />}
 
