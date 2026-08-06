@@ -5,25 +5,27 @@ const db = require("../config/database");
 // Create Enquiry
 // ===============================
 
-const createEnquiry = (enquiry, callback) => {
+const createEnquiry = async (enquiry, callback) => {
 
   try {
 
-    const stmt = db.prepare(`
+    const result = await db.query(
+      `
       INSERT INTO enquiries
       (name, phone, email, plot, message)
-      VALUES (?, ?, ?, ?, ?)
-    `);
-
-    const result = stmt.run(
-      enquiry.name,
-      enquiry.phone,
-      enquiry.email,
-      enquiry.plot,
-      enquiry.message
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING id
+      `,
+      [
+        enquiry.name,
+        enquiry.phone,
+        enquiry.email,
+        enquiry.plot,
+        enquiry.message,
+      ]
     );
 
-    callback(null, result.lastInsertRowid);
+    callback(null, result.rows[0].id);
 
   } catch (err) {
 
@@ -38,17 +40,19 @@ const createEnquiry = (enquiry, callback) => {
 // Get All Enquiries
 // ===============================
 
-const getAllEnquiries = (callback) => {
+const getAllEnquiries = async (callback) => {
 
   try {
 
-    const rows = db.prepare(`
+    const result = await db.query(
+      `
       SELECT *
       FROM enquiries
       ORDER BY created_at DESC
-    `).all();
+      `
+    );
 
-    callback(null, rows);
+    callback(null, result.rows);
 
   } catch (err) {
 
@@ -63,17 +67,20 @@ const getAllEnquiries = (callback) => {
 // Get Enquiry By ID
 // ===============================
 
-const getEnquiryById = (id, callback) => {
+const getEnquiryById = async (id, callback) => {
 
   try {
 
-    const row = db.prepare(`
+    const result = await db.query(
+      `
       SELECT *
       FROM enquiries
-      WHERE id = ?
-    `).get(id);
+      WHERE id = $1
+      `,
+      [id]
+    );
 
-    callback(null, row);
+    callback(null, result.rows[0]);
 
   } catch (err) {
 
@@ -88,28 +95,31 @@ const getEnquiryById = (id, callback) => {
 // Update Enquiry
 // ===============================
 
-const updateEnquiry = (id, enquiry, callback) => {
+const updateEnquiry = async (id, enquiry, callback) => {
 
   try {
 
-    db.prepare(`
+    await db.query(
+      `
       UPDATE enquiries
       SET
-        name = ?,
-        phone = ?,
-        email = ?,
-        plot = ?,
-        message = ?,
-        status = ?
-      WHERE id = ?
-    `).run(
-      enquiry.name,
-      enquiry.phone,
-      enquiry.email,
-      enquiry.plot,
-      enquiry.message,
-      enquiry.status,
-      id
+        name = $1,
+        phone = $2,
+        email = $3,
+        plot = $4,
+        message = $5,
+        status = $6
+      WHERE id = $7
+      `,
+      [
+        enquiry.name,
+        enquiry.phone,
+        enquiry.email,
+        enquiry.plot,
+        enquiry.message,
+        enquiry.status,
+        id,
+      ]
     );
 
     callback(null);
@@ -127,17 +137,20 @@ const updateEnquiry = (id, enquiry, callback) => {
 // Update Status
 // ===============================
 
-const updateStatus = (id, status, callback) => {
+const updateStatus = async (id, status, callback) => {
 
   try {
 
-    db.prepare(`
+    await db.query(
+      `
       UPDATE enquiries
-      SET status = ?
-      WHERE id = ?
-    `).run(
-      status,
-      id
+      SET status = $1
+      WHERE id = $2
+      `,
+      [
+        status,
+        id,
+      ]
     );
 
     callback(null);
@@ -155,14 +168,17 @@ const updateStatus = (id, status, callback) => {
 // Delete Enquiry
 // ===============================
 
-const deleteEnquiry = (id, callback) => {
+const deleteEnquiry = async (id, callback) => {
 
   try {
 
-    db.prepare(`
+    await db.query(
+      `
       DELETE FROM enquiries
-      WHERE id = ?
-    `).run(id);
+      WHERE id = $1
+      `,
+      [id]
+    );
 
     callback(null);
 
@@ -179,20 +195,22 @@ const deleteEnquiry = (id, callback) => {
 // Get Enquiries For Dropdown
 // ===============================
 
-const getEnquiryDropdown = (callback) => {
+const getEnquiryDropdown = async (callback) => {
 
   try {
 
-    const rows = db.prepare(`
+    const result = await db.query(
+      `
       SELECT
         id,
         name,
         phone
       FROM enquiries
       ORDER BY name ASC
-    `).all();
+      `
+    );
 
-    callback(null, rows);
+    callback(null, result.rows);
 
   } catch (err) {
 
