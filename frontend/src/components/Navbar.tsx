@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { Menu, X, CalendarCheck } from "lucide-react";
-import logo from "../assets/logo.png";
+
 
 const links = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
-  { label: "Kanha Estate", href: "#highlights" },
-  { label: "Gallery", href: "#plots" },
+  { label: "Amenities", href: "#amenities" },
+  { label: "Gallery", href: "#gallery" },
+  { label: "Location", href: "#location" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -42,27 +43,17 @@ export default function Navbar() {
           href="#home"
           className="flex items-center gap-4 group"
         >
-          <img
-            src={logo}
-            alt="Shiv Sakhi Infra Ventures"
-            className="w-14 h-14 object-contain transition duration-500 group-hover:scale-105"
-          />
-
           <div className="leading-tight">
 
-            <h2 className="font-serif text-xl text-white font-semibold tracking-wide">
-              SHIV SAKHI
-            </h2>
+  <h2 className="font-serif text-3xl text-white font-semibold tracking-wide">
+    Kanha Estate
+  </h2>
 
-            <p className="text-gold text-sm tracking-[0.18em] uppercase">
-              INFRA VENTURES
-            </p>
+  <p className="text-gold text-xs tracking-[0.35em] uppercase mt-1">
+    Premium Residential Plots
+  </p>
 
-            <p className="text-white/60 text-[10px] tracking-[0.35em] uppercase">
-              Lucknow
-            </p>
-
-          </div>
+</div>
         </a>
 
         {/* Desktop Menu */}
@@ -96,7 +87,7 @@ export default function Navbar() {
           >
             <CalendarCheck size={18} />
 
-            Schedule Site Visit
+            Book Site Visit
 
           </a>
 
@@ -146,7 +137,7 @@ export default function Navbar() {
             >
               <CalendarCheck size={18} />
 
-              Schedule Site Visit
+              Book Site Visit
 
             </a>
 

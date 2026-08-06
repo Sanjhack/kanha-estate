@@ -1,71 +1,140 @@
 import {
-  Waypoints,
+  MapPin,
   Route,
+ ShieldCheck,
+  Trees,
   Building2,
-  CheckCircle2,
-  Construction,
-  Maximize2,
-  ShieldCheck,
   Wallet,
-} from 'lucide-react';
-import Reveal from './Reveal';
+  Home,
+  TrendingUp,
+} from "lucide-react";
+import Reveal from "./Reveal";
 
 const highlights = [
-  { icon: Waypoints, title: '50 Ft Divider Main Road', desc: 'A grand divided carriageway frames the township entrance.' },
-  { icon: Route, title: '30 & 40 Ft Internal Roads', desc: 'Wide, well-lit internal roads for easy access to every plot.' },
-  { icon: Building2, title: 'Premium Residential Township', desc: 'Thoughtfully planned gated community with modern infrastructure.' },
-  { icon: CheckCircle2, title: 'Phase 1 Completed', desc: 'Delivered and ready for construction with all amenities in place.' },
-  { icon: Construction, title: 'Phase 2 Under Development', desc: 'Ongoing development expanding the township with new blocks.' },
-  { icon: Maximize2, title: 'Expansion Towards 60 Bigha', desc: 'A bold roadmap scaling the project to 60 Bigha of premium land.' },
-  { icon: ShieldCheck, title: 'Near DRDO Defence Corridor', desc: 'Strategically located adjoining the DRDO defence corridor node.' },
-  { icon: Wallet, title: 'Flexible Payment Plan', desc: 'Tailored instalment plans designed for every investor profile.' },
+  {
+    icon: MapPin,
+    title: "Prime Location",
+    desc: "Strategically located on NH-56B with excellent connectivity to Lucknow and surrounding areas.",
+  },
+  {
+    icon: Route,
+    title: "Wide Internal Roads",
+    desc: "Well-planned 30 & 40 ft internal roads with a 50 ft divider main road for smooth accessibility.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Registry Ready",
+    desc: "Clear legal documentation with secure ownership for complete peace of mind.",
+  },
+  {
+    icon: Trees,
+    title: "Green Environment",
+    desc: "A peaceful residential atmosphere with landscaped surroundings and open spaces.",
+  },
+  {
+    icon: Building2,
+    title: "Modern Infrastructure",
+    desc: "Designed with quality infrastructure to support comfortable residential living.",
+  },
+  {
+    icon: Wallet,
+    title: "Easy Payment Plans",
+    desc: "Flexible payment options designed to make property ownership simple and convenient.",
+  },
+  {
+    icon: Home,
+    title: "Perfect for Families",
+    desc: "An ideal destination to build your dream home in a secure and well-planned community.",
+  },
+  {
+    icon: TrendingUp,
+    title: "High Investment Potential",
+    desc: "Located in one of Lucknow's rapidly developing growth corridors with strong appreciation prospects.",
+  },
 ];
 
 export default function Highlights() {
   return (
-    <section id="highlights" className="py-32 lg:py-40 bg-[#f6f9f6] relative overflow-hidden">
-      {/* decorative */}
-      <div className="absolute -top-32 -right-32 w-[30rem] h-[30rem] rounded-full bg-emerald-50/60 blur-[5rem]" />
-      <div className="absolute -bottom-32 -left-32 w-[30rem] h-[30rem] rounded-full bg-amber-50/40 blur-[5rem]" />
+    <section
+      id="amenities"
+      className="py-32 lg:py-40 bg-[#f7faf8] relative overflow-hidden"
+    >
+      <div className="absolute -top-40 -right-40 w-[32rem] h-[32rem] rounded-full bg-emerald-50 blur-[6rem]" />
+      <div className="absolute -bottom-40 -left-40 w-[32rem] h-[32rem] rounded-full bg-yellow-50 blur-[6rem]" />
 
       <div className="relative max-w-7xl mx-auto px-8">
-        <Reveal className="text-center max-w-2xl mx-auto">
-          <span className="text-gold text-xs tracking-[0.35em] uppercase font-medium">
-            Project Highlights
+
+        <Reveal className="text-center max-w-3xl mx-auto">
+
+          <span className="text-gold uppercase tracking-[0.35em] text-xs font-medium">
+            Why Choose Kanha Estate
           </span>
-          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-emerald-deep mt-5 font-semibold leading-[1.12]">
-            Crafted for Lasting Value
+
+          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-emerald-deep mt-5 font-semibold leading-tight">
+            Everything You Need
+            <br />
+            For a Better Tomorrow
           </h2>
-          <div className="luxe-divider luxe-divider-center mt-7" />
-          <p className="text-gray-600 mt-7 leading-[1.8] text-lg font-light">
-            Every detail of Kanha Estate is engineered to deliver a premium
-            living experience and strong investment returns.
+
+          <div className="luxe-divider luxe-divider-center mt-8" />
+
+          <p className="text-gray-600 mt-8 text-lg leading-8">
+            Kanha Estate combines premium infrastructure,
+            excellent connectivity, legal transparency,
+            and future growth potential to deliver
+            an exceptional residential investment.
           </p>
+
         </Reveal>
 
-        <div className="mt-20 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {highlights.map((h, i) => {
-            const Icon = h.icon;
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-7 mt-20">
+
+          {highlights.map((item, index) => {
+
+            const Icon = item.icon;
+
             return (
-              <Reveal key={h.title} delay={i * 80}>
-                <div className="group glass rounded-3xl p-8 h-full border border-white/70 shadow-soft hover:shadow-luxe hover:shadow-emerald-900/10 transition-all duration-700 ease-luxe hover:-translate-y-2.5">
-                  <div className="w-14 h-14 rounded-2xl bg-emerald-deep flex items-center justify-center mb-6 group-hover:bg-gold transition-all duration-700 ease-luxe group-hover:scale-110">
+
+              <Reveal
+                key={item.title}
+                delay={index * 80}
+              >
+
+                <div className="group bg-white rounded-3xl p-8 shadow-soft border border-gray-100 hover:border-gold/40 hover:shadow-luxe transition-all duration-500 hover:-translate-y-3 h-full">
+
+                  <div className="w-16 h-16 rounded-2xl bg-emerald-deep flex items-center justify-center group-hover:bg-gold transition duration-500">
+
                     <Icon
-                      size={26}
-                      className="text-gold group-hover:text-emerald-deep transition-colors duration-700"
+                      size={30}
+                      className="text-gold group-hover:text-emerald-deep transition"
                     />
+
                   </div>
-                  <h3 className="font-serif text-xl text-emerald-deep font-semibold leading-snug">
-                    {h.title}
+
+                  <h3 className="font-serif text-2xl text-emerald-deep mt-7 font-semibold">
+
+                    {item.title}
+
                   </h3>
-                  <p className="text-sm text-gray-600 mt-3 leading-[1.75]">{h.desc}</p>
-                  {/* accent line */}
-                  <div className="mt-5 h-px w-8 bg-gold/30 group-hover:w-full group-hover:bg-gold transition-all duration-700 ease-luxe" />
+
+                  <p className="text-gray-600 leading-7 mt-4">
+
+                    {item.desc}
+
+                  </p>
+
+                  <div className="mt-6 h-[2px] w-10 bg-gold/40 group-hover:w-full transition-all duration-500" />
+
                 </div>
+
               </Reveal>
+
             );
+
           })}
+
         </div>
+
       </div>
     </section>
   );

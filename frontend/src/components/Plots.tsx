@@ -1,111 +1,218 @@
-import { Ruler, Maximize, ArrowRight } from 'lucide-react';
-import Reveal from './Reveal';
+import { ArrowRight } from "lucide-react";
+import Reveal from "./Reveal";
 
-const plots = [
-  { area: '1000', unit: 'Sq Ft', dim: '20 × 50', frontage: '20 ft', depth: '50 ft' },
-  { area: '1250', unit: 'Sq Ft', dim: '25 × 50', frontage: '25 ft', depth: '50 ft' },
-  { area: '1500', unit: 'Sq Ft', dim: '30 × 50', frontage: '30 ft', depth: '50 ft' },
-  { area: '2000', unit: 'Sq Ft', dim: '40 × 50', frontage: '40 ft', depth: '50 ft' },
-  { area: '2500', unit: 'Sq Ft', dim: '50 × 50', frontage: '50 ft', depth: '50 ft' },
+import heroVideo from "../assets/hero.mp4";
+
+import gallery1 from "../assets/gallery1.png";
+import gallery2 from "../assets/gallery2.png";
+import gallery3 from "../assets/gallery3.png";
+import gallery4 from "../assets/gallery4.png";
+import gallery5 from "../assets/gallery5.png";
+
+const gallery = [
+  {
+    image: gallery1,
+    title: "Natural Green Surroundings",
+    subtitle: "Kanha Estate",
+    large: true,
+  },
+  {
+    image: gallery2,
+    title: "Residential Development",
+    subtitle: "Kanha Estate",
+  },
+  {
+    image: gallery3,
+    title: "Project Infrastructure",
+    subtitle: "Kanha Estate",
+  },
+  {
+    image: gallery4,
+    title: "Premium Township",
+    subtitle: "Kanha Estate",
+  },
+  {
+    image: gallery5,
+    title: "Peaceful Environment",
+    subtitle: "Kanha Estate",
+    large: true,
+  },
 ];
 
 export default function Plots() {
   return (
-    <section id="plots" className="py-32 lg:py-40 bg-emerald-deep relative overflow-hidden">
-      {/* texture */}
-      <div
-        className="absolute inset-0 opacity-[0.06]"
-        style={{ background: 'radial-gradient(circle at 20% 30%, #c5a253 0, transparent 40%)' }}
-      />
-      <div
-        className="absolute inset-0 opacity-[0.06]"
-        style={{ background: 'radial-gradient(circle at 80% 70%, #c5a253 0, transparent 40%)' }}
-      />
-      {/* subtle grid */}
-      <div
-        className="absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(197,162,83,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(197,162,83,0.4) 1px, transparent 1px)',
-          backgroundSize: '64px 64px',
-        }}
-      />
+    <section
+      id="plots"
+      className="py-32 lg:py-40 bg-emerald-deep relative overflow-hidden"
+    >
+      {/* Background Effects */}
+
+      <div className="absolute inset-0 opacity-10">
+
+        <div className="absolute -top-40 -left-40 w-[35rem] h-[35rem] rounded-full bg-gold blur-[120px]" />
+
+        <div className="absolute bottom-0 right-0 w-[35rem] h-[35rem] rounded-full bg-gold blur-[120px]" />
+
+      </div>
 
       <div className="relative max-w-7xl mx-auto px-8">
-        <Reveal className="text-center max-w-2xl mx-auto">
-          <span className="text-gold text-xs tracking-[0.35em] uppercase font-medium">
-            Plot Sizes
+
+        {/* Heading */}
+
+        <Reveal className="text-center max-w-3xl mx-auto">
+
+          <span className="text-gold uppercase tracking-[0.35em] text-xs font-medium">
+
+            Experience Kanha Estate
+
           </span>
-          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-white mt-5 font-semibold leading-[1.12]">
-            Choose Your Perfect Plot
+
+          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-white mt-5 font-semibold">
+
+            Explore The Project
+
           </h2>
-          <div className="luxe-divider luxe-divider-center mt-7" />
-          <p className="text-white/65 mt-7 leading-[1.8] text-lg font-light">
-            Standard depth is 50 feet while frontage changes according to plot
-            area, giving you flexibility to build the home you envision.
+
+          <div className="luxe-divider luxe-divider-center mt-8" />
+
+          <p className="mt-8 text-white/70 text-lg leading-8">
+
+            Explore the natural surroundings,
+            premium location, ongoing development
+            and future potential of Kanha Estate
+            through our project video and gallery.
+
           </p>
+
         </Reveal>
 
-        <div className="mt-20 grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
-          {plots.map((p, i) => (
-            <Reveal key={p.area} delay={i * 90}>
-              <div className="group relative glass-dark rounded-3xl p-9 h-full border border-gold/20 hover:border-gold/45 transition-all duration-700 ease-luxe hover:-translate-y-3 overflow-hidden">
-                {/* hover sheen */}
-                <div className="absolute inset-0 bg-gradient-to-br from-gold/0 to-gold/0 group-hover:from-gold/10 group-hover:to-transparent transition-all duration-700" />
+        {/* Hero Video */}
 
-                <div className="relative flex items-start justify-between">
-                  <div>
-                    <p className="font-serif text-6xl text-gold font-bold leading-none">
-                      {p.area}
-                    </p>
-                    <p className="text-white/55 text-xs tracking-[0.25em] uppercase mt-3">
-                      {p.unit}
-                    </p>
-                  </div>
-                  <div className="w-14 h-14 rounded-2xl border border-gold/40 flex items-center justify-center group-hover:bg-gold transition-all duration-700">
-                    <Maximize size={24} className="text-gold group-hover:text-emerald-deep transition-colors duration-700" />
-                  </div>
-                </div>
+        <Reveal delay={150}>
 
-                <div className="relative mt-9 pt-7 border-t border-white/12">
-                  <p className="font-serif text-3xl text-white font-semibold">
-                    {p.dim}
-                    <span className="text-sm text-white/45 font-light ml-1.5">ft</span>
+          <div className="mt-16 overflow-hidden rounded-[2rem] border border-gold/20 shadow-luxe">
+
+            <video
+              src={heroVideo}
+              autoPlay
+              muted
+              loop
+              playsInline
+              controls
+              className="w-full h-[300px] md:h-[520px] object-cover"
+            />
+
+          </div>
+
+        </Reveal>
+
+        {/* Gallery */}
+
+        <div className="grid lg:grid-cols-3 gap-7 mt-20">
+
+          {gallery.map((item, index) => (
+
+            <Reveal
+              key={index}
+              delay={index * 80}
+              className={item.large ? "lg:col-span-2" : ""}
+            >
+
+              <div className="group relative overflow-hidden rounded-[30px] shadow-luxe">
+
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-[420px] object-cover transition duration-700 group-hover:scale-110"
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+                <div className="absolute bottom-0 left-0 p-8">
+
+                  <p className="text-gold uppercase tracking-[0.25em] text-xs">
+
+                    {item.subtitle}
+
                   </p>
-                  <div className="flex items-center gap-6 mt-4 text-xs text-white/65">
-                    <span className="flex items-center gap-2">
-                      <Ruler size={14} className="text-gold" /> Frontage {p.frontage}
-                    </span>
-                    <span className="flex items-center gap-2">
-                      <Ruler size={14} className="text-gold" /> Depth {p.depth}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-          ))}
 
-          {/* Info card */}
-          <Reveal delay={plots.length * 90}>
-            <div className="rounded-3xl p-9 h-full bg-gradient-to-br from-gold to-gold-dark text-emerald-deep flex flex-col justify-center shadow-gold-glow">
-              <h3 className="font-serif text-3xl font-semibold leading-snug">
-                Need a custom size?
-              </h3>
-              <p className="text-sm mt-4 text-emerald-deep/85 leading-[1.75]">
-                Larger and corner plots are available on request. Talk to our
-                team to find the right fit for your budget and plan.
-              </p>
+                  <h3 className="font-serif text-3xl md:text-4xl text-white mt-3">
+
+                    {item.title}
+
+                  </h3>
+
+                </div>
+
+              </div>
+
+            </Reveal>
+
+          ))}
+                  </div>
+
+        {/* Bottom CTA */}
+
+        <Reveal delay={500}>
+
+          <div className="mt-24 rounded-[2rem] glass-dark border border-gold/20 p-12 text-center shadow-luxe">
+
+            <span className="text-gold uppercase tracking-[0.35em] text-xs">
+
+              Book Your Visit
+
+            </span>
+
+            <h3 className="font-serif text-4xl lg:text-5xl text-white mt-5 leading-tight">
+
+              Experience Kanha Estate
+              <br />
+              In Person
+
+            </h3>
+
+            <div className="luxe-divider luxe-divider-center mt-8" />
+
+            <p className="text-white/70 mt-8 max-w-3xl mx-auto text-lg leading-8">
+
+              Visit our project site and explore the premium
+              residential plots, wide internal roads, peaceful
+              surroundings and future investment opportunities.
+
+            </p>
+
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-5">
+
               <a
                 href="#contact"
-                className="group mt-8 inline-flex items-center justify-center gap-2.5 bg-emerald-deep text-gold font-medium px-7 py-3.5 rounded-full text-sm hover:bg-[#15503d] transition-all duration-500 ease-luxe hover:-translate-y-1 self-start"
+                className="btn-gold inline-flex items-center gap-3 px-10 py-4 rounded-full text-emerald-deep font-semibold hover:-translate-y-1 transition-all duration-300"
               >
-                Enquire Now
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-500" />
+
+                Book Site Visit
+
+                <ArrowRight size={18} />
+
               </a>
+
+              <a
+                href="#location"
+                className="inline-flex items-center justify-center px-10 py-4 rounded-full border border-white/30 text-white hover:bg-white hover:text-emerald-deep transition-all duration-300"
+              >
+
+                View Location
+
+              </a>
+
             </div>
-          </Reveal>
-        </div>
+
+          </div>
+
+        </Reveal>
+
       </div>
+
     </section>
+
   );
+
 }

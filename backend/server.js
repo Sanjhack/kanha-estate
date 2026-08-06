@@ -56,7 +56,7 @@ app.use("/api/reports", reportRoutes);
 app.get("/", (req, res) => {
   res.json({
     success: true,
-    message: "🚀 SS Infra Ventures Backend is Running Successfully",
+    message: "🚀 KANHA ESTATE Backend is Running Successfully",
   });
 });
 
@@ -80,7 +80,7 @@ const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log("======================================");
-  console.log("🚀 SS Infra Ventures Backend Started");
+  console.log("🚀 KANHA ESTATE Backend Started");
   console.log(`🌐 Server : http://localhost:${PORT}`);
   console.log("======================================");
 });

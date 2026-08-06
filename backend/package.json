@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "SS Infra Ventures Backend API",
+  "description": "KANHA ESTATE Backend API",
   "main": "server.js",
   "type": "commonjs",
   "scripts": {
